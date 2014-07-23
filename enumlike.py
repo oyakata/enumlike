@@ -14,6 +14,10 @@ class EnumLike(object):
     u'EGG'
     >>> tuple(choices)
     ((1, u'SPAM'), (2, u'EGG'))
+    >>> 'egg' in choices
+    True
+    >>> 'jam' in choices
+    False
     """
     def __init__(self, *iterable):
         values = []
@@ -23,9 +27,9 @@ class EnumLike(object):
             values.append(x)
             names.append(y)
             labels.append(z)
-        self._names = names
-        self._values = values
-        self._lables = labels
+        self._names = tuple(names)
+        self._values = tuple(values)
+        self._labels = tuple(labels)
         for name, value in zip(names, values):
             setattr(self, name, value)
         self.choices = tuple(zip(values, labels))
@@ -39,8 +43,11 @@ class EnumLike(object):
     def __iter__(self):
         return iter(self.choices)
 
-    def __getitem__(self, name):
-        return self._dict[name]
+    def __contains__(self, item):
+        return item in self._names
+
+    def __getitem__(self, key):
+        return self._dict[key]
 
     def verbose(self, value):
         return self._verbose[value]
