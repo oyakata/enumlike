@@ -31,3 +31,7 @@ class EnumLikeTest(unittest.TestCase):
     def test_as_dict(self):
         obj = self._makeOne()
         self.assertEqual(obj.as_dict(), {"foo": 1, "bar": 2, "baz": 3})
+
+
+if __name__ == "__main__":
+    unittest.main()
